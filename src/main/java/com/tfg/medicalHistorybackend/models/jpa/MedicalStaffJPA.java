@@ -3,7 +3,6 @@ package com.tfg.medicalHistorybackend.models.jpa;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Data
@@ -25,4 +24,7 @@ public class MedicalStaffJPA{
 
     @Column(name = "status")
     private boolean status;
+
+    @OneToOne
+    private UserJPA user;
 }
