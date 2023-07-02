@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class DoctorResponse extends UserResponse{
 
-    @Schema(name = "id", example = "1", description = "identify of the user on the database")
+    @Schema(name = "id", example = "1", description = "identify of the doctor on the database")
     private long id;
 
     @Schema(name = "mp", example = "123456", description = "medical practitioner number of the doctor")

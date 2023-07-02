@@ -22,4 +22,7 @@ public class MedicalStaffJPA{
 
     @Column(name = "institution")
     private String institution;
+
+    @Column(name = "status")
+    private boolean status;
 }

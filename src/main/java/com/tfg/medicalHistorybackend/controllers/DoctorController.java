@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/v1")
+@RequestMapping("/v1/doctor")
 public class DoctorController {
 
     private final DoctorService doctorService;
@@ -18,7 +18,7 @@ public class DoctorController {
         this.doctorService = doctorService;
     }
 
-    @PostMapping("/doctor/createDoctor")
+    @PostMapping("/createDoctor")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Doctor created"),
             @ApiResponse(responseCode = "400", description = "Doctor not created")
