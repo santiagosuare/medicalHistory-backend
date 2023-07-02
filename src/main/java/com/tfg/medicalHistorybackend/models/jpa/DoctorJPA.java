@@ -22,6 +22,9 @@ public class DoctorJPA{
     @Column(name = "institution")
     private String institution;
 
+    @Column(name = "status")
+    private boolean status;
+
     @OneToOne
     private UserJPA user;
 }

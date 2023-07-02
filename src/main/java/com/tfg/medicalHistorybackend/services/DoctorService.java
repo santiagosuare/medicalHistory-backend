@@ -1,5 +1,6 @@
 package com.tfg.medicalHistorybackend.services;
 
+import com.tfg.medicalHistorybackend.models.helpers.Roles;
 import com.tfg.medicalHistorybackend.models.jpa.DoctorJPA;
 import com.tfg.medicalHistorybackend.models.jpa.UserJPA;
 import com.tfg.medicalHistorybackend.models.responses.DoctorResponse;
@@ -29,7 +30,7 @@ public class DoctorService {
             userJPA.setSurname(doctorResponse.getSurname());
             userJPA.setDocument(doctorResponse.getDocument());
             userJPA.setEmail(doctorResponse.getEmail());
-            userJPA.setRole(doctorResponse.getRole());
+            userJPA.setRole(Roles.DOCTOR.getId());
             UserJPA newUserJPA = userService.createUserJPA(userJPA);
 
             DoctorJPA doctorJPA = new DoctorJPA();
@@ -47,6 +48,7 @@ public class DoctorService {
     }
     private DoctorResponse createDoctorResponse(DoctorJPA doctorJPA){
         DoctorResponse doctorResponse = new DoctorResponse();
+        doctorResponse.setId(doctorJPA.getId());
         doctorResponse.setMp(doctorJPA.getMp());
         doctorResponse.setInstitution(doctorJPA.getInstitution());
         doctorResponse.setName(doctorJPA.getUser().getName());
