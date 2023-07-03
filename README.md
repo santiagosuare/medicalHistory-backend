@@ -12,10 +12,6 @@ El mismo sera desplegado en 3 instancias:
 - [x] Bff [medicalHistory-bff](https://google.com.ar)
 - [x] Frontend [medicalHistory-frontend](https://google.com.ar)
 
-### Tiempo de desarrollo
-- Duracion 3 semanas
-- 4 Hs diarias
-
 ### Tecnologias utilizadas
 - <a href="https://docs.oracle.com/en/java/"> Java </a>
 - <a href="https://react.dev/"> React.js </a>
