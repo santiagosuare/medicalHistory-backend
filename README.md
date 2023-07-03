@@ -14,7 +14,7 @@ El mismo sera desplegado en 3 instancias:
 
 ### Tiempo de desarrollo
 - Duracion 3 semanas
-- 4 Hs semanales
+- 4 Hs diarias
 
 ### Tecnologias utilizadas
 - <a href="https://docs.oracle.com/en/java/"> Java </a>
