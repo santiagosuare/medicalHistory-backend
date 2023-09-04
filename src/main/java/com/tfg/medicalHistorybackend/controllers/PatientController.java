@@ -34,6 +34,7 @@ public class PatientController {
         }
     }
 
+    @CrossOrigin
     @GetMapping("/getPatient/{id}")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Patient found"),
@@ -48,6 +49,22 @@ public class PatientController {
         }
     }
 
+    @CrossOrigin
+    @GetMapping("/getPatientByDocument/{document}")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Patient found"),
+            @ApiResponse(responseCode = "400", description = "Patient not found")
+    })
+    @Tag(name = "PatientController", description = "PatientController API")
+    public ResponseEntity<PatientResponse> getPatientByDocument(@PathVariable String document){
+        try{
+            return ResponseEntity.ok(patientService.getPatientByDocument(document));
+        } catch (Exception e){
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @CrossOrigin
     @GetMapping("/getAllPatients")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Patients found"),

@@ -35,4 +35,7 @@ public class UserJPA {
 
     @Column(name = "role")
     private int role;
+
+    @Column(name = "password")
+    private String password;
 }
