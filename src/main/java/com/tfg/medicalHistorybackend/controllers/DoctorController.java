@@ -20,6 +20,7 @@ public class DoctorController {
         this.doctorService = doctorService;
     }
 
+    @CrossOrigin
     @PostMapping("/createDoctor")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Doctor created"),
@@ -34,6 +35,7 @@ public class DoctorController {
         }
     }
 
+    @CrossOrigin
     @GetMapping("/getDoctor/{id}")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Doctor found"),
@@ -48,6 +50,22 @@ public class DoctorController {
         }
     }
 
+    @CrossOrigin
+    @GetMapping("/getDoctorByUserId/{userId}")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Doctor found"),
+            @ApiResponse(responseCode = "400", description = "Doctor not found")
+    })
+    @Tag(name = "DoctorController", description = "DoctorController API")
+    public ResponseEntity<DoctorResponse> getDoctorByUserId(@PathVariable String userId){
+        try{
+            return ResponseEntity.ok(doctorService.getDoctorByUserId(userId));
+        } catch (Exception e){
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @CrossOrigin
     @GetMapping("/getAllDoctors")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Doctors found"),

@@ -69,6 +69,20 @@ public class PatientService {
         }
     }
 
+    public PatientResponse getPatientByDocument(String document) throws Exception {
+        LOGGER.info("getting patient by document...");
+        try {
+            Optional<PatientJPA> patientJPAOptional = patientRepository.findByUserDocument(document);
+            PatientJPA patientJPA = patientJPAOptional.orElseThrow( () -> new Exception("Patient not found"));
+            if (!patientJPA.isStatus()) throw new Exception("Patient not found");
+            LOGGER.info("Patient: {}, found successfully", patientJPA);
+            return createPatientResponse(patientJPA);
+        } catch (Exception e) {
+            LOGGER.error("Error getting patient: " + e.getMessage());
+            throw e;
+        }
+    }
+
     public List<PatientResponse> getAllPatients(){
         LOGGER.info("getting all patients...");
         try {

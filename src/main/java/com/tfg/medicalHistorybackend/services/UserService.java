@@ -1,6 +1,7 @@
 package com.tfg.medicalHistorybackend.services;
 
 import com.tfg.medicalHistorybackend.models.jpa.UserJPA;
+import com.tfg.medicalHistorybackend.models.responses.LoginResponse;
 import com.tfg.medicalHistorybackend.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,5 +35,29 @@ public class UserService {
             LOGGER.error("Error to create user: " + e.getMessage());
             throw e;
         }
+    }
+
+    public LoginResponse loginUser(String document, String password){
+        LOGGER.info("login user...");
+        try{
+            UserJPA userJPA = userRepository.findByDocument(document).orElseThrow(() -> new Exception("User not found"));
+            if(userJPA.getPassword().equals(password)){
+                LOGGER.info("User: {}, logged successfully", userJPA);
+                return createLoginResponse(userJPA, true);
+            }else{
+                LOGGER.info("User: {}, not logged", userJPA);
+                return createLoginResponse(userJPA, false);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private LoginResponse createLoginResponse(UserJPA userJPA, boolean logged){
+        LoginResponse loginResponse = new LoginResponse();
+        loginResponse.setUserId(userJPA.getId());
+        loginResponse.setRole(userJPA.getRole());
+        loginResponse.setLogged(logged);
+        return loginResponse;
     }
 }

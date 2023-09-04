@@ -67,6 +67,20 @@ public class DoctorService {
         }
     }
 
+    public DoctorResponse getDoctorByUserId(String userId) throws Exception {
+        LOGGER.info("getting doctor by user id...");
+        try {
+            Optional<DoctorJPA> doctorJPAOptional = doctorRepository.findByUserId(userId);
+            DoctorJPA doctorJPA = doctorJPAOptional.orElseThrow(() -> new Exception("Doctor not found"));
+            if (!doctorJPA.isStatus()) throw new Exception("Doctor not found");
+            LOGGER.info("Doctor: {}, found successfully", doctorJPA);
+            return createDoctorResponse(doctorJPA);
+        } catch (Exception e) {
+            LOGGER.error("Error getting doctor: " + e.getMessage());
+            throw e;
+        }
+    }
+
     public List<DoctorResponse> getAllDoctor(){
         LOGGER.info("getting all doctors...");
         try{
