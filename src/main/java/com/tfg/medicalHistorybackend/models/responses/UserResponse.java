@@ -14,7 +14,7 @@ import java.time.ZonedDateTime;
 public class UserResponse {
 
     @Schema(name = "id", example = "1", description = "identify of the user on the database")
-    private long id;
+    private Long id;
 
     @Schema(name = "name", example = "Juan", description = "name of the user")
     private String name;

@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 public class MedicalStaffResponse extends UserResponse {
 
     @Schema(name = "id", example = "1", description = "identify of the medical staff on the database")
-    private long id;
+    private Long id;
 
     @Schema(name = "mp", example = "123456", description = "medical practitioner number of the medical staff")
     private int mp;
