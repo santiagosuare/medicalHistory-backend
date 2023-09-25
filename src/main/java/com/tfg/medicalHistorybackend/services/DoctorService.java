@@ -108,7 +108,7 @@ public class DoctorService {
             throw e;
         }
     }
-    private DoctorResponse createDoctorResponse(DoctorJPA doctorJPA){
+    public DoctorResponse createDoctorResponse(DoctorJPA doctorJPA){
         DoctorResponse doctorResponse = new DoctorResponse();
         doctorResponse.setId(doctorJPA.getId());
         doctorResponse.setMp(doctorJPA.getMp());
