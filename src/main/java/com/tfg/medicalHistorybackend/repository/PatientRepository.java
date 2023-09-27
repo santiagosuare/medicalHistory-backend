@@ -12,4 +12,6 @@ public interface PatientRepository extends JpaRepository<PatientJPA, String> {
 
     @Query("SELECT p FROM PatientJPA p WHERE p.user.document = ?1")
     public Optional<PatientJPA> findByUserDocument(String document);
+
+
 }
