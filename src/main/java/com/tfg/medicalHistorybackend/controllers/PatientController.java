@@ -51,6 +51,21 @@ public class PatientController {
         }
     }
 
+    @CrossOrigin
+    @GetMapping("/getPatientById/{id}")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Patient found"),
+            @ApiResponse(responseCode = "400", description = "Patient not found")
+    })
+    @Tag(name = "PatientController", description = "PatientController API")
+    public ResponseEntity<UserResponse> getPatientById(@PathVariable Long id){
+        try{
+            return ResponseEntity.ok(patientService.getPatientById(id));
+        } catch (Exception e){
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 
 
 }

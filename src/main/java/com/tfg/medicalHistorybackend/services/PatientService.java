@@ -2,8 +2,7 @@ package com.tfg.medicalHistorybackend.services;
 
 import com.tfg.medicalHistorybackend.models.helpers.Roles;
 import com.tfg.medicalHistorybackend.models.jpa.*;
-import com.tfg.medicalHistorybackend.models.responses.PatientResponse;
-import com.tfg.medicalHistorybackend.models.responses.UserResponse;
+import com.tfg.medicalHistorybackend.models.responses.*;
 import com.tfg.medicalHistorybackend.repository.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -112,6 +111,81 @@ public class PatientService {
         }
 
 
+    }
+
+    public UserResponse getPatientById(Long id) throws Exception {
+        LOGGER.info("getting patient by id...");
+        try {
+            Optional<PatientJPA> patientJPAOptional = patientRepository.findById(String.valueOf(id));
+            PatientJPA patientJPA = patientJPAOptional.orElseThrow( () -> new Exception("Patient not found"));
+
+            Optional<CUSJPA> cusJPAOptional = cusRepository.findByPatientId(String.valueOf(patientJPA.getId()));
+            CUSJPA cusJPA = cusJPAOptional.orElseThrow( () -> new Exception("CUS not found"));
+
+            Optional<VaccineJPA> vaccineJPAOptional = vaccineRepository.findByCUSId(String.valueOf(cusJPA.getId()));
+            VaccineJPA vaccineJPA = vaccineJPAOptional.orElseThrow( () -> new Exception("vaccine not found"));
+
+            Optional<PhysicalExaminationJPA> physicalExaminationJPAOptional = physicalExaminationRepository.findByCUSId(String.valueOf(cusJPA.getId()));
+            PhysicalExaminationJPA physicalExaminationJPA = physicalExaminationJPAOptional.orElseThrow( () -> new Exception("PhysicalExamination not found"));
+
+            Optional<PathologicalHistoryJPA> pathologicalHistoryJPAOptional = pathologicalHistoryRepository.findByCUSId(String.valueOf(cusJPA.getId()));
+            PathologicalHistoryJPA pathologicalHistoryJPA = pathologicalHistoryJPAOptional.orElseThrow( () -> new Exception("Pathological History not found"));
+
+            Optional<PrescribedMedicationJPA> prescribedMedicationJPAOptional = prescribedMedicationRepository.findByCUSId(String.valueOf(cusJPA.getId()));
+            PrescribedMedicationJPA prescribedMedicationJPA = prescribedMedicationJPAOptional.orElseThrow( () -> new Exception("Prescribed Medication not found"));
+
+            PrescribedMedicationResponse prescribedMedicationResponse = new PrescribedMedicationResponse();
+            prescribedMedicationResponse.setMedication(prescribedMedicationJPA.getMedication());
+
+            VaccineResponse vaccineResponse = new VaccineResponse();
+            vaccineResponse.setCard(vaccineJPA.isCard());
+            vaccineResponse.setComplete(vaccineJPA.isComplete());
+            vaccineResponse.setObservations(vaccineJPA.getObservations());
+
+            PhysicalExaminationResponse physicalExaminationResponse = new PhysicalExaminationResponse();
+            physicalExaminationResponse.setSize(physicalExaminationJPA.getSize());
+            physicalExaminationResponse.setWeight(physicalExaminationJPA.getWeight());
+            physicalExaminationResponse.setBmi(physicalExaminationJPA.getBmi());
+            physicalExaminationResponse.setObservations(physicalExaminationJPA.getObservations());
+
+            PathologicalHistoryResponse pathologicalHistoryResponse = new PathologicalHistoryResponse();
+            pathologicalHistoryResponse.setSurgeries(pathologicalHistoryJPA.getSurgeries());
+            pathologicalHistoryResponse.setCardiovascular(pathologicalHistoryJPA.getCardiovascular());
+            pathologicalHistoryResponse.setAllergies(pathologicalHistoryJPA.getAllergies());
+            pathologicalHistoryResponse.setOftalmologicos(pathologicalHistoryJPA.getOftalmologicos());
+            pathologicalHistoryResponse.setOthers(pathologicalHistoryJPA.getOthers());
+
+            CUSResponse cusResponse = new CUSResponse();
+            cusResponse.setBirthDate(cusJPA.getBirthDate());
+            cusResponse.setGender(cusJPA.getGender());
+            cusResponse.setAddress(cusJPA.getAddress());
+            cusResponse.setCity(cusJPA.getCity());
+            cusResponse.setVaccine(vaccineResponse);
+            cusResponse.setPhysicalExamination(physicalExaminationResponse);
+            cusResponse.setPathologicalHistory(pathologicalHistoryResponse);
+            cusResponse.setPrescribedMedication(prescribedMedicationResponse);
+
+            PatientResponse patientResponse = new PatientResponse();
+            patientResponse.setAge(patientJPA.getAge());
+            patientResponse.setCellphone(patientJPA.getCellphone());
+            patientResponse.setHealthInsurance(patientJPA.getHealthInsurance());
+            patientResponse.setMember(patientJPA.getMember());
+            patientResponse.setCus(cusResponse);
+
+            UserResponse userResponse = new UserResponse();
+            userResponse.setName(patientJPA.getUser().getName());
+            userResponse.setSurname(patientJPA.getUser().getSurname());
+            userResponse.setDocument(patientJPA.getUser().getDocument());
+            userResponse.setEmail(patientJPA.getUser().getEmail());
+            userResponse.setPatient(patientResponse);
+
+            LOGGER.info("Patient, found successfully");
+            return userResponse;
+
+        } catch (Exception e) {
+            LOGGER.error("Error getting patient: " + e.getMessage());
+            throw e;
+        }
     }
 
     public PatientResponse getPatientByDocument(String document) throws Exception {
