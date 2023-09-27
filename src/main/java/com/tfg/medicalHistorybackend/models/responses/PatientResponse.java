@@ -25,5 +25,7 @@ public class PatientResponse extends UserResponse{
     private String healthInsurance;
 
     @Schema(name = "member", example = "123456", description = "member of the health insurance of the patient")
-    private int member;
+    private Long member;
+
+    private CUSResponse cus;
 }
