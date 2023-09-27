@@ -26,7 +26,7 @@ public class PatientJPA{
     private String healthInsurance;
 
     @Column(name = "member")
-    private int member;
+    private Long member;
 
     @Column(name = "status")
     private boolean status;

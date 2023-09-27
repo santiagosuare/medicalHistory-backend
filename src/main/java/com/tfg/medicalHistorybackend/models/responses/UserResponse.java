@@ -33,4 +33,6 @@ public class UserResponse {
 
     @Schema(name = "role", example = "1", description = "role of the user")
     private int role;
+
+    private PatientResponse patient;
 }

@@ -21,6 +21,7 @@ public class PatientController {
         this.patientService = patientService;
     }
 
+    @CrossOrigin
     @PostMapping("/createPatient")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Patient created"),
@@ -30,6 +31,21 @@ public class PatientController {
     public ResponseEntity<UserResponse> createPatient(@RequestBody UserResponse userResponse){
         try{
             return ResponseEntity.ok(patientService.createPatient(userResponse));
+        } catch (Exception e){
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @CrossOrigin
+    @GetMapping("/getPatientByDocument/{document}")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Patient found"),
+            @ApiResponse(responseCode = "400", description = "Patient not found")
+    })
+    @Tag(name = "PatientController", description = "PatientController API")
+    public ResponseEntity<PatientResponse> getPatientByDocument(@PathVariable String document){
+        try{
+            return ResponseEntity.ok(patientService.getPatientByDocument(document));
         } catch (Exception e){
             return ResponseEntity.notFound().build();
         }

@@ -37,6 +37,6 @@ public class CUSResponse {
     private PhysicalExaminationResponse physicalExamination;
 
     @Schema(name = "pathologicalHistory")
-    private PathologicalHistoryResponse pathologicalHistoryResponse;
+    private PathologicalHistoryResponse pathologicalHistory;
 
 }
