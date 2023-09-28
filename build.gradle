@@ -14,6 +14,15 @@ configurations {
 	}
 }
 
+jar {
+	enabled = true
+	manifest {
+		attributes(
+			'mainClass': 'com.tfg.medicalHistorybackend.MedicalHistoryBackendApplication'
+		)
+	}
+}
+
 repositories {
 	mavenCentral()
 	maven { url 'https://repo.spring.io/milestone' }
